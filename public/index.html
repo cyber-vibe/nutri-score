@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FFF0F2" />
+  <title>NutriSnap — AI Food Health Score</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="NutriSnap home">
+        <span class="brand-mark">N</span>
+        <span>NutriSnap</span>
+      </a>
+      <span class="local-pill"><span class="status-dot"></span> Local AI · Gemma 3</span>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">PHOTO → NUTRITION INSIGHT</div>
+      <h1>See your food in a <em>healthier</em> light.</h1>
+      <p>Upload a meal photo and get a clear AI-estimated health score, calories, macros, vitamins, minerals, and simple nutrition takeaways.</p>
+    </section>
+
+    <section class="workspace">
+      <div class="upload-card card">
+        <div id="dropZone" class="drop-zone" tabindex="0" role="button" aria-label="Upload food photo">
+          <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp" hidden />
+          <div id="uploadEmpty" class="upload-empty">
+            <div class="upload-icon">↥</div>
+            <h2>Drop your food photo here</h2>
+            <p>or click to browse · JPG, PNG, WebP</p>
+            <button id="chooseButton" class="secondary-button" type="button">Choose photo</button>
+          </div>
+          <div id="previewWrap" class="preview-wrap hidden">
+            <img id="preview" alt="Uploaded food preview" />
+            <button id="removeButton" class="remove-button" type="button" aria-label="Remove image">×</button>
+          </div>
+        </div>
+
+        <button id="analyzeButton" class="primary-button" type="button" disabled>
+          <span id="analyzeLabel">Analyze my meal</span>
+          <span id="spinner" class="spinner hidden"></span>
+        </button>
+        <p class="privacy-note">Your photo stays on your computer and is sent only to your local Ollama server.</p>
+      </div>
+
+      <div id="emptyResults" class="results-placeholder card">
+        <div class="plate-illustration">◌</div>
+        <h2>Your nutrition snapshot will appear here</h2>
+        <p>Upload a clear photo with the full meal visible for the best estimate.</p>
+      </div>
+
+      <div id="results" class="results card hidden" aria-live="polite">
+        <div class="result-heading">
+          <div>
+            <span class="mini-label">AI NUTRITION ESTIMATE</span>
+            <h2 id="foodName">Your meal</h2>
+            <p id="summary"></p>
+          </div>
+          <div id="scoreBadge" class="score-badge grade-a">
+            <span class="grade" id="grade">A</span>
+            <span class="score-copy"><b id="healthScore">86</b>/100</span>
+          </div>
+        </div>
+
+        <div class="meta-row">
+          <span><b id="calories">0</b> kcal</span>
+          <span id="serving">1 visible serving</span>
+          <span>Confidence: <b id="confidence">medium</b></span>
+        </div>
+
+        <div class="nutrient-grid" id="nutrientGrid"></div>
+
+        <div class="insight-grid">
+          <div class="insight good">
+            <h3>✓ What looks good</h3>
+            <ul id="positives"></ul>
+          </div>
+          <div class="insight caution">
+            <h3>! Keep an eye on</h3>
+            <ul id="watchOuts"></ul>
+          </div>
+        </div>
+
+        <p class="disclaimer">AI estimate from an image only. Portions and ingredients may be misidentified. This is not an official Nutri-Score or medical advice.</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden" role="alert"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>
